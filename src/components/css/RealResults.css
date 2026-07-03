@@ -1,0 +1,15 @@
+.real-results{background:var(--blue-soft);padding:60px 0 50px;text-align:center}
+.rr-head{max-width:1200px;margin:0 auto 40px;padding:0 16px}
+.rr-eyebrow{color:var(--ink-soft);font-weight:700;letter-spacing:.3em;margin:0 0 18px;text-transform:uppercase}
+.rr-title{font-family:var(--font-display);font-size:40px;line-height:1.05;margin:0}
+.rr-subtitle{color:var(--ink-soft);margin:16px auto 0;max-width:680px}
+.rr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;max-width:1480px;margin:0 auto;padding:0 16px}
+.rr-card{background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 30px 80px rgba(17,34,51,.08);display:flex;flex-direction:column}
+.rr-image{width:100%;display:block;object-fit:cover}
+.rr-card-content{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px}
+.rr-tag{display:inline-flex;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);background:var(--blue-soft);border-radius:999px;padding:8px 14px}
+.rr-card-title{margin:0;font-size:20px;line-height:1.2}
+.rr-card-desc{margin:0;color:var(--ink-soft)}
+.rr-buy{background:var(--lime);border:none;border-radius:999px;color:#000;font-weight:700;padding:12px 22px;cursor:pointer}
+@media(max-width:1280px){.rr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){.rr-grid{grid-template-columns:1fr}.rr-title{font-size:32px}}

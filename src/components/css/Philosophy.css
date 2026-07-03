@@ -1,0 +1,23 @@
+.philosophy{position:relative;background:linear-gradient(160deg,#ffdce8,#ffc8df);padding:120px 20px;overflow:hidden}
+.phil-note{position:absolute;width:240px;background:#fff;border-radius:28px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.16);top:50%;transform:translateY(-50%) rotate(-6deg);cursor:default}
+.phil-note p{font-weight:800;font-size:15px;line-height:1.4;margin:12px 0 16px;color:#5b3847}
+.phil-note-label{display:block;font-size:10px;letter-spacing:1px;opacity:.7;text-transform:uppercase;margin-bottom:10px}
+.phil-note-left{left:6%;background:#f25d95;color:#fff;transform:translateY(-50%) rotate(-9deg)}
+.phil-note-right{right:6%;transform:translateY(-50%) rotate(6deg);background:#fffafc}
+.phil-note-right p{color:#5b3847}
+.phil-note-actions{display:flex;justify-content:space-between;border-top:1px solid rgba(0,0,0,.08);padding-top:12px;font-size:18px}
+.vote-btn{background:transparent;border:none;color:inherit;cursor:pointer;font-size:20px;transition:transform .2s ease}
+.vote-btn:hover{transform:scale(1.05)}
+.vote-btn.active{color:#a43d68;font-weight:800}
+.phil-content{position:relative;max-width:760px;margin:0 auto;text-align:center;z-index:1}
+.phil-content h2{font-family:var(--font-display);font-size:44px;line-height:1.05;margin:0 auto;max-width:630px}
+.phil-buttons{display:flex;justify-content:center;gap:18px;margin-top:34px;flex-wrap:wrap}
+.phil-btn{border:none;border-radius:999px;padding:14px 30px;font-weight:700;display:inline-flex;align-items:center;gap:10px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+.phil-btn:hover{transform:translateY(-1px);box-shadow:0 16px 24px rgba(0,0,0,.12)}
+.phil-btn.active{box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.phil-btn-yellow{background:#ffe3ee;color:#a43d68}
+.phil-btn-blue{background:#f25d95;color:#fff}
+.phil-panel{margin-top:28px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-radius:24px;padding:24px 28px;box-shadow:0 24px 40px rgba(0,0,0,.08)}
+.phil-panel p{margin:0;color:#5b3847;line-height:1.8;font-size:16px}
+@media(max-width:1000px){.philosophy{padding:100px 16px}.phil-note{position:relative;left:auto;right:auto;top:auto;transform:none;margin:0 auto 24px;max-width:320px}.phil-note-left,.phil-note-right{transform:none}.phil-note-right{margin-top:16px}.phil-content h2{font-size:32px;max-width:100%}}
+@media(max-width:680px){.phil-note{width:100%;max-width:320px;padding:18px}.phil-buttons{flex-direction:column;gap:14px}.phil-btn{width:100%;justify-content:center}.phil-panel{padding:20px}}

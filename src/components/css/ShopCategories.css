@@ -1,0 +1,8 @@
+.shop-categories{background:var(--cream-soft);padding:50px 0}
+.shop-categories-inner{display:flex;align-items:center;flex-wrap:wrap;gap:40px}
+.shop-title{font-family:var(--font-display);font-size:56px;margin:0;min-width:160px}
+.shop-cats{display:flex;flex:1;flex-wrap:wrap;gap:40px;justify-content:space-between}
+.shop-cat{display:flex;flex-direction:column;gap:6px}
+.shop-cat-eyebrow{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--ink-soft)}
+.shop-cat-title{font-family:var(--font-display);font-size:28px}
+@media(max-width:900px){.shop-title{font-size:38px}.shop-cats{gap:24px}.shop-cat-title{font-size:22px}}

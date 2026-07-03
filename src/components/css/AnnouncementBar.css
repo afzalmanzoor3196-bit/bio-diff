@@ -1,0 +1,6 @@
+.announcement-bar{background:var(--green-deep);color:var(--white);overflow:hidden;white-space:nowrap;padding:10px 0}
+.announcement-track{display:inline-flex;animation:marquee 22s linear infinite}
+.announcement-item{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.3px;padding:0 28px;white-space:nowrap}
+.announcement-icon{color:var(--lime);transform:rotate(0)}
+@keyframes marquee{0%{transform:translate(0)}to{transform:translate(-50%)}}
+@media(prefers-reduced-motion:reduce){.announcement-track{animation:none}}
