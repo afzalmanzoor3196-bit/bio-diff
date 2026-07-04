@@ -8,7 +8,7 @@ import img14 from '../../assets/14.jpeg'
 
 const filters = ['ACNE & BREAKOUTS', 'HYPERPIGMENTATION', 'DRY & DEHYDRATED SKIN', 'KOREAN GLASS SKIN']
 
-const products = [
+const defaultProducts = [
   {
     id: 'tea-tree-face-wash',
     category: 'ACNE & BREAKOUTS',
@@ -16,6 +16,7 @@ const products = [
     image: img11,
     name: 'Tea Tree & Salicylic Acid Face Wash',
     price: 'Rs.1,099',
+    priceValue: 1099,
   },
   {
     id: 'tinted-sunscreen-spf60',
@@ -24,6 +25,7 @@ const products = [
     image: img12,
     name: 'Tinted Sunscreen SPF 60',
     price: 'Rs.1,599',
+    priceValue: 1599,
   },
   {
     id: 'anti-acne-serum',
@@ -32,6 +34,7 @@ const products = [
     image: img13,
     name: 'Anti-Acne Face Serum (Clear Skin)',
     price: 'Rs.2,099',
+    priceValue: 2099,
   },
   {
     id: 'vitamin-c-serum',
@@ -40,15 +43,16 @@ const products = [
     image: img14,
     name: 'Vitamin C Face Serum (Glow)',
     price: 'Rs.2,099',
+    priceValue: 2099,
   },
 ]
 
-function SkinNeeds() {
+function SkinNeeds({ products = defaultProducts }) {
   const [active, setActive] = useState(filters[0])
   const { addToCart } = useCart()
   const [justAdded, setJustAdded] = useState(null)
 
-  const visibleProducts = useMemo(() => products, [])
+  const visibleProducts = useMemo(() => products, [products])
 
   const handleAdd = (product) => {
     addToCart(product)

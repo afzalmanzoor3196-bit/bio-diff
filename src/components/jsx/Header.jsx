@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import '../css/Header.css'
+import logo from '../../assets/logo.png'
 
 const navLinks = [
   { label: 'Home', href: '#' },
@@ -32,7 +33,10 @@ function Header({ onCartClick }) {
     <header className="header">
       <div className="container header-inner">
         <a href="#" className="logo">
-          BioDiff
+          <span className="logo-mark">
+            <img src={logo} alt="BioDiff" className="logo-img" />
+          </span>
+          <span className="logo-text">BIODIFF</span>
         </a>
 
         <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
@@ -88,10 +92,7 @@ function Header({ onCartClick }) {
           <button
             aria-label="Toggle menu"
             className="menu-toggle"
-            onClick={() => {
-              setMenuOpen((prev) => !prev)
-              setDropdownOpen(false)
-            }}
+            onClick={() => setMenuOpen((prev) => !prev)}
           >
             ☰
           </button>

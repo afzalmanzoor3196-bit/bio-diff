@@ -1,6 +1,9 @@
 .header{background:var(--lime);padding:18px 0;position:relative;z-index:50}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:.5px;color:var(--ink);white-space:nowrap;text-decoration:none}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:.5px;color:var(--green-deep);text-decoration:none}
+.logo-mark{width:86px;height:86px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:transparent;box-shadow:0 12px 28px rgba(0,0,0,.1)}
+.logo img{width:160%;height:160%;object-fit:cover;object-position:center center;display:block}
+.logo-text{font-size:32px;font-weight:800;line-height:1;color:var(--green-deep);text-transform:uppercase}
 .nav{display:flex}
 .nav ul{display:flex;gap:28px;flex-wrap:wrap;align-items:center;margin:0;padding:0;list-style:none}
 .nav-item{position:relative}

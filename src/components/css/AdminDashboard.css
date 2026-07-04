@@ -1,0 +1,115 @@
+.admin-dashboard-page{
+  min-height:100vh;
+  padding:32px;
+  background:#f8f1f7;
+}
+.admin-dashboard-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:32px;
+}
+.admin-dashboard-header h1{
+  margin:0;
+  font-size:32px;
+  color:#1f1f1f;
+}
+.admin-dashboard-header p{
+  margin:8px 0 0;
+  color:#5a5a5a;
+}
+.admin-logout{
+  border:none;
+  background:#333;
+  color:#fff;
+  border-radius:999px;
+  padding:12px 20px;
+  cursor:pointer;
+}
+.admin-dashboard-form-section,
+.admin-dashboard-list{
+  background:#fff;
+  border-radius:24px;
+  padding:28px;
+  margin-bottom:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.08);
+}
+.admin-dashboard-form{
+  display:grid;
+  gap:16px;
+}
+.admin-dashboard-form label{
+  display:block;
+  font-weight:600;
+  color:#333;
+}
+.admin-dashboard-form input,
+.admin-dashboard-form input[type='file'],
+.admin-dashboard-form textarea{
+  width:100%;
+  border:1px solid #dcdcdc;
+  border-radius:12px;
+  padding:12px 14px;
+  font-size:15px;
+  margin-top:8px;
+}
+.upload-file-name{
+  margin-top:8px;
+  color:#4a4a4a;
+  font-size:14px;
+}
+.admin-dashboard-form button{
+  width:fit-content;
+  border:none;
+  border-radius:999px;
+  padding:14px 24px;
+  background:#d63384;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700;
+}
+.admin-form-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.admin-cancel{
+  background:#999;
+}
+.admin-products-grid,
+.admin-stories-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
+}
+.admin-product-card,
+.admin-story-card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  background:#fafafa;
+  border-radius:20px;
+  padding:16px;
+  align-items:center;
+  text-align:center;
+}
+.admin-product-card img,
+.admin-story-card img,
+.admin-story-card video{
+  width:100%;
+  max-height:200px;
+  object-fit:cover;
+  border-radius:16px;
+  background:#fff;
+}
+.admin-product-name{
+  margin:0;
+  font-size:16px;
+  font-weight:700;
+}
+.admin-product-category,
+.admin-product-price{
+  margin:2px 0 0;
+  color:#5a5a5a;
+}

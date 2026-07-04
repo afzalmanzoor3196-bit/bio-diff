@@ -1,17 +1,18 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../css/HerStories.css'
 import story1Video from '../../assets/Story 1.mp4'
 
 const posters = ['/images/stories/story-1.jpg', '/images/stories/story-2.jpg', '/images/stories/story-3.jpg']
-const stories = Array.from({ length: 10 }, (_, index) => ({
+const defaultStories = Array.from({ length: 10 }, (_, index) => ({
   id: index + 1,
   poster: posters[index % posters.length],
   video: index === 0 ? story1Video : null,
 }))
 
-function HerStories() {
-  const [muted, setMuted] = useState(stories.map(() => true))
-  const [playing, setPlaying] = useState(stories.map(() => false))
+function HerStories({ stories = defaultStories }) {
+  const [muted, setMuted] = useState([])
+  const [playing, setPlaying] = useState([])
+  const [selectedStory, setSelectedStory] = useState(null)
   const videoRefs = useRef([])
   const trackRef = useRef(null)
 
@@ -52,6 +53,27 @@ function HerStories() {
     track.scrollBy({ left: dir * width, behavior: 'smooth' })
   }
 
+  useEffect(() => {
+    setMuted(stories.map(() => true))
+    setPlaying(stories.map(() => false))
+    videoRefs.current = []
+  }, [stories])
+
+  useEffect(() => {
+    document.body.style.overflow = selectedStory ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedStory])
+
+  const openStoryModal = (story) => {
+    setSelectedStory(story)
+  }
+
+  const closeStoryModal = () => {
+    setSelectedStory(null)
+  }
+
   const goToProducts = () => {
     const target = document.getElementById('skin-needs')
     if (target) target.scrollIntoView({ behavior: 'smooth' })
@@ -75,29 +97,61 @@ function HerStories() {
         </button>
 
         <div className="hs-track" ref={trackRef}>
-          {stories.map((s, i) => (
-            <div className="hs-video" key={s.id}>
-              {s.video ? (
-                <video
-                  ref={(el) => (videoRefs.current[i] = el)}
-                  className="hs-video-element"
-                  src={s.video}
-                  muted={muted[i]}
-                  loop
-                  playsInline
-                  controls={false}
-                />
-              ) : (
-                <img src={s.poster} alt={`Customer story ${s.id}`} loading="lazy" />
-              )}
-              <button className="hs-play" aria-label="Play video" onClick={() => togglePlay(i)}>
-                {playing[i] ? '❚❚' : '▶'}
-              </button>
-              <button className="hs-mute" aria-label="Toggle mute" onClick={() => toggleMute(i)}>
-                {muted[i] ? '🔇' : '🔊'}
-              </button>
-            </div>
-          ))}
+          {stories.map((s, i) => {
+            const storyVideo = s.video || s.videoUrl || null
+            const storyPoster = s.poster || s.posterUrl || '/images/stories/story-1.jpg'
+
+            return (
+              <div
+                className="hs-video"
+                key={s.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => openStoryModal(s)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    openStoryModal(s)
+                  }
+                }}
+              >
+                {storyVideo ? (
+                  <video
+                    ref={(el) => (videoRefs.current[i] = el)}
+                    className="hs-video-element"
+                    src={storyVideo}
+                    muted={muted[i]}
+                    loop
+                    playsInline
+                    controls={false}
+                  />
+                ) : (
+                  <img src={storyPoster} alt={`Customer story ${s.id}`} loading="lazy" />
+                )}
+                {s.title && <div className="hs-story-title">{s.title}</div>}
+                <button
+                  className="hs-play"
+                  aria-label="Play video"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    togglePlay(i)
+                  }}
+                >
+                  {playing[i] ? '❚❚' : '▶'}
+                </button>
+                <button
+                  className="hs-mute"
+                  aria-label="Toggle mute"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    toggleMute(i)
+                  }}
+                >
+                  {muted[i] ? '🔇' : '🔊'}
+                </button>
+              </div>
+            )
+          })}
         </div>
 
         <button className="hs-arrow hs-arrow-right" onClick={() => scrollByCards(1)} aria-label="Next story">
@@ -110,6 +164,27 @@ function HerStories() {
           Shop Now
         </button>
       </div>
+
+      {selectedStory && (
+        <div className="hs-modal-backdrop" onClick={closeStoryModal}>
+          <div className="hs-modal" onClick={(event) => event.stopPropagation()}>
+            <button className="hs-modal-close" aria-label="Close story" onClick={closeStoryModal}>
+              ×
+            </button>
+            <div className="hs-modal-media">
+              {selectedStory.video || selectedStory.videoUrl ? (
+                <video src={selectedStory.video || selectedStory.videoUrl} controls autoPlay playsInline />
+              ) : (
+                <img src={selectedStory.poster || selectedStory.posterUrl || '/images/stories/story-1.jpg'} alt={selectedStory.title || `Story ${selectedStory.id}`} />
+              )}
+            </div>
+            <div className="hs-modal-content">
+              <h3>{selectedStory.title || `Story ${selectedStory.id}`}</h3>
+              <p>Explore this customer story in full view.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

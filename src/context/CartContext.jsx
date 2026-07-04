@@ -3,6 +3,15 @@ import { createContext, useContext, useEffect, useState } from 'react'
 const CartContext = createContext(null)
 const STORAGE_KEY = 'biodiff_cart'
 
+function parsePriceValue(price) {
+  if (typeof price === 'number' && Number.isFinite(price)) return price
+  if (typeof price === 'string') {
+    const numeric = Number(price.replace(/[^\d.-]/g, ''))
+    return Number.isFinite(numeric) ? numeric : 0
+  }
+  return 0
+}
+
 export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
     try {
@@ -28,7 +37,7 @@ export function CartProvider({ children }) {
       if (existing) {
         return prev.map((i) => (i.id === product.id ? { ...i, qty: i.qty + 1 } : i))
       }
-      return [...prev, { ...product, qty: 1 }]
+      return [...prev, { ...product, qty: 1, priceValue: parsePriceValue(product.priceValue ?? product.price) }]
     })
     setToast(`${product.name} added to cart`)
     window.clearTimeout(addToCart._t)
@@ -48,7 +57,7 @@ export function CartProvider({ children }) {
   }
 
   const cartCount = items.reduce((sum, i) => sum + i.qty, 0)
-  const cartTotal = items.reduce((sum, i) => sum + i.qty * i.priceValue, 0)
+  const cartTotal = items.reduce((sum, i) => sum + i.qty * parsePriceValue(i.priceValue ?? i.price), 0)
 
   return (
     <CartContext.Provider
