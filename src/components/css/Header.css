@@ -1,25 +1,215 @@
-.header{background:var(--lime);padding:18px 0;position:relative;z-index:50}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:.5px;color:var(--green-deep);text-decoration:none}
-.logo-mark{width:86px;height:86px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;background:transparent;box-shadow:0 12px 28px rgba(0,0,0,.1)}
-.logo img{width:160%;height:160%;object-fit:cover;object-position:center center;display:block}
-.logo-text{font-size:32px;font-weight:800;line-height:1;color:var(--green-deep);text-transform:uppercase}
-.nav{display:flex}
-.nav ul{display:flex;gap:28px;flex-wrap:wrap;align-items:center;margin:0;padding:0;list-style:none}
-.nav-item{position:relative}
-.nav-link{font-size:15px;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;text-decoration:none;transition:opacity .2s}
-.nav-link:hover{opacity:.65}
-.nav-dropdown-toggle{background:none;border:none;padding:0}
-.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--lime);box-shadow:0 20px 40px rgba(0,0,0,.08);border-radius:14px;padding:12px 0;min-width:220px}
-.dropdown-menu.open{display:block}
-.dropdown-menu li{margin:0}
-.dropdown-menu a{display:block;padding:10px 20px;font-size:14px;color:var(--ink);text-decoration:none}
-.dropdown-menu a:hover{background:rgba(0,0,0,.05)}
-.caret{font-size:11px}
-.header-icons{display:flex;align-items:center;gap:18px}
-.icon-btn{background:none;border:none;font-size:18px;position:relative;cursor:pointer}
-.cart-icon{position:relative}
-.cart-count{position:absolute;top:-8px;right:-10px;background:var(--green-deep);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.search-form input{border:1px solid rgba(0,0,0,.3);background:#fff;border-radius:999px;padding:8px 16px;font-size:13px;width:180px;outline:none}
-.menu-toggle{display:none;background:none;border:none;font-size:26px;cursor:pointer}
-@media(max-width:1000px){.nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--lime);padding:16px 20px;border-bottom:1px solid rgba(0,0,0,.12);box-shadow:0 20px 40px rgba(0,0,0,.08)}.nav-open{display:block}.nav ul{flex-direction:column;gap:16px}.dropdown-menu{position:static;box-shadow:none;background:transparent;padding:0}.dropdown-menu a{padding-left:24px}.menu-toggle{display:block}.header-icons{gap:12px}.search-form input{width:100%;max-width:240px}}
+.header {
+    background: #ffffff;
+    /* Header ki height kam karne ke liye padding ko 18px se 10px kar diya hai */
+    padding: 10px 0;
+    position: relative;
+    z-index: 50;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity .4s
+}
+
+/* FIX: Pehle opacity 0.12 thi jisse logo gayab ho raha tha, isko 0.85 kar diya hai taake halke se fade ho */
+.logo:hover {
+    opacity: 0.85;
+}
+
+.logo-img-new {
+    height: 75px;
+    /* Pehle 45px thi, sirf image barhi karne ke liye isko 75px kar diya hai */
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+}
+
+.logo:hover .logo-img-new {
+    transform: scale(1.05)
+}
+
+.nav {
+    display: flex
+}
+
+.nav ul {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.nav-item {
+    position: relative
+}
+
+.nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity .2s
+}
+
+.nav-link:hover {
+    opacity: .65
+}
+
+.nav-dropdown-toggle {
+    background: none;
+    border: none;
+    padding: 0
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--lime);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .08);
+    border-radius: 14px;
+    padding: 12px 0;
+    min-width: 220px
+}
+
+.dropdown-menu.open {
+    display: block
+}
+
+.dropdown-menu li {
+    margin: 0
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none
+}
+
+.dropdown-menu a:hover {
+    background: rgba(0, 0, 0, .05)
+}
+
+.caret {
+    font-size: 11px
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 18px
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    position: relative;
+    cursor: pointer
+}
+
+.cart-icon {
+    position: relative
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: var(--green-deep);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.search-form input {
+    border: 1px solid rgba(0, 0, 0, .3);
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    width: 180px;
+    outline: none
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer
+}
+
+@media(max-width:1000px) {
+    .nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--lime);
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, .08)
+    }
+
+    .nav-open {
+        display: block
+    }
+
+    .nav ul {
+        flex-direction: column;
+        gap: 16px
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background: transparent;
+        padding: 0
+    }
+
+    .dropdown-menu a {
+        padding-left: 24px
+    }
+
+    .menu-toggle {
+        display: block
+    }
+
+    .header-icons {
+        gap: 12px
+    }
+
+    .search-form input {
+        width: 100%;
+        max-width: 240px
+    }

@@ -63,8 +63,7 @@ function Philosophy() {
 
       <div className="container phil-content">
         <h2>
-          We created BioDiff to make healthy, glowing skin feel simple,
-          effective, and stress-free.
+          BioDiff is Pakistan’s premium organic skincare brand, created with naturally inspired ingredients to nourish, protect, and enhance your skin’s natural radiance. Our luxurious, gentle formulas bring together purity, performance, and everyday self-care—so your skin feels healthy, glowing, and beautifully refreshed.
         </h2>
 
         <div className="phil-buttons">

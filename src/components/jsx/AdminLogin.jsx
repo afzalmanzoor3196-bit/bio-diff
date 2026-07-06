@@ -14,7 +14,7 @@ function AdminLogin({ onLogin, error }) {
     <main className="admin-login-page">
       <div className="admin-login-card">
         <h1>Admin Login</h1>
-        <p>Use admin / admin123 to log in.</p>
+        <p>For Admin</p>
         {error && <div className="admin-login-error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <label>

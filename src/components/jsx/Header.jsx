@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import '../css/Header.css'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/Logo.2.png'
 
 const navLinks = [
   { label: 'Home', href: '#' },
@@ -33,10 +33,7 @@ function Header({ onCartClick }) {
     <header className="header">
       <div className="container header-inner">
         <a href="#" className="logo">
-          <span className="logo-mark">
-            <img src={logo} alt="BioDiff" className="logo-img" />
-          </span>
-          <span className="logo-text">BIODIFF</span>
+          <img src={logo} alt="BioDiff" className="logo-img-new" />
         </a>
 
         <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
