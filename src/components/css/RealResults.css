@@ -12,4 +12,49 @@
 .rr-card-desc{margin:0;color:var(--ink-soft)}
 .rr-buy{background:var(--lime);border:none;border-radius:999px;color:#000;font-weight:700;padding:12px 22px;cursor:pointer}
 @media(max-width:1280px){.rr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:740px){.rr-grid{grid-template-columns:1fr}.rr-title{font-size:32px}}
+
+.rr-dots {
+  display: none;
+}
+
+@media(max-width:740px) {
+  .rr-title {
+    font-size: 32px;
+  }
+  .rr-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 0 16px;
+    margin: 0 -16px;
+  }
+  .rr-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .rr-card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+  .rr-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .rr-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .rr-dot.active {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}

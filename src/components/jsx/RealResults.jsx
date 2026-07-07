@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import '../css/RealResults.css'
 
 import img119 from '../../assets/119.png'
@@ -37,9 +38,37 @@ const results = [
 ]
 
 function RealResults() {
+  const scrollRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
   const goToProducts = () => {
     const target = document.getElementById('skin-needs')
     if (target) target.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return
+    const scrollLeft = scrollRef.current.scrollLeft
+    const childWidth = scrollRef.current.children[0].offsetWidth
+    const gap = 16 // gap between cards in mobile
+    const index = Math.round(scrollLeft / (childWidth + gap))
+    setActiveIndex(index)
+  }
+
+  const scrollTo = (index) => {
+    if (!scrollRef.current) return
+    const child = scrollRef.current.children[index]
+    if (child) {
+      // Get the padding of the scroll container to accurately scroll to the child
+      const containerPaddingLeft = parseInt(window.getComputedStyle(scrollRef.current).paddingLeft, 10) || 0
+      const scrollPosition = child.offsetLeft - scrollRef.current.offsetLeft - containerPaddingLeft
+      
+      scrollRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      })
+      setActiveIndex(index)
+    }
   }
 
   return (
@@ -50,7 +79,7 @@ function RealResults() {
         <p className="rr-subtitle">Press Reset on your skin &amp; planet</p>
       </div>
 
-      <div className="rr-grid">
+      <div className="rr-grid" ref={scrollRef} onScroll={handleScroll}>
         {results.map((r) => (
           <div className="rr-card" key={r.id}>
             <img className="rr-image" src={r.image} alt={r.title} loading="lazy" />
@@ -63,6 +92,17 @@ function RealResults() {
               </button>
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="rr-dots">
+        {results.map((_, index) => (
+          <button
+            key={index}
+            className={`rr-dot ${index === activeIndex ? 'active' : ''}`}
+            onClick={() => scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
       </div>
     </section>
