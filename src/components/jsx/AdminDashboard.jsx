@@ -13,8 +13,6 @@ const emptyProductForm = {
 
 const emptyStoryForm = {
   title: '',
-  posterUrl: '',
-  videoUrl: '',
 }
 
 function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateProduct, onDeleteProduct, onUpdateStory, onDeleteStory, onLogout }) {
@@ -26,6 +24,12 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
   const [editingStory, setEditingStory] = useState(null)
   const [productForm, setProductForm] = useState(emptyProductForm)
   const [storyForm, setStoryForm] = useState(emptyStoryForm)
+  const [uploadedPoster, setUploadedPoster] = useState('')
+  const [uploadPosterName, setUploadPosterName] = useState('')
+  const [storyError, setStoryError] = useState('')
+  const [storySuccess, setStorySuccess] = useState('')
+  // Keep track of current blob URL so we can revoke it to free memory
+  const videoBlobRef = { current: null }
 
   useEffect(() => {
     if (editingProduct) {
@@ -48,17 +52,17 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
 
   useEffect(() => {
     if (editingStory) {
-      setStoryForm({
-        title: editingStory.title || '',
-        posterUrl: editingStory.poster || '',
-        videoUrl: editingStory.video?.startsWith('blob:') ? '' : editingStory.video || '',
-      })
+      setStoryForm({ title: editingStory.title || '' })
     } else {
       setStoryForm(emptyStoryForm)
     }
 
     setUploadedVideo('')
     setUploadVideoName('')
+    setUploadedPoster('')
+    setUploadPosterName('')
+    setStoryError('')
+    setStorySuccess('')
   }, [editingStory])
 
   const handleFileChange = (event) => {
@@ -84,11 +88,25 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
       setUploadVideoName('')
       return
     }
+    // Use blob URL — works with all browsers for video streaming
+    // base64 data URIs are too large for video elements to load
+    const blobUrl = URL.createObjectURL(file)
+    setUploadedVideo(blobUrl)
+    setUploadVideoName(file.name)
+  }
+
+  const handlePosterChange = (event) => {
+    const file = event.target.files?.[0]
+    if (!file) {
+      setUploadedPoster('')
+      setUploadPosterName('')
+      return
+    }
 
     const reader = new FileReader()
     reader.onload = () => {
-      setUploadedVideo(reader.result || '')
-      setUploadVideoName(file.name)
+      setUploadedPoster(reader.result || '')
+      setUploadPosterName(file.name)
     }
     reader.readAsDataURL(file)
   }
@@ -130,26 +148,36 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
 
   const handleStorySubmit = (event) => {
     event.preventDefault()
-    const storyVideo = uploadedVideo || storyForm.videoUrl.trim()
-    if (!storyVideo) return
+    setStoryError('')
+    setStorySuccess('')
+
+    if (!uploadedVideo && !uploadedPoster) {
+      setStoryError('Please upload at least a poster image or a video from your PC.')
+      return
+    }
 
     const storyPayload = {
       id: editingStory?.id || `story-${Date.now()}`,
-      title: storyForm.title.trim() || uploadVideoName || `Story ${Date.now()}`,
-      poster: storyForm.posterUrl.trim() || '/images/stories/story-1.jpg',
-      video: storyVideo,
+      title: storyForm.title.trim() || uploadVideoName || uploadPosterName || `Story ${Date.now()}`,
+      poster: uploadedPoster || null,
+      video: uploadedVideo || null,
     }
 
     if (editingStory) {
       onUpdateStory(editingStory.id, storyPayload)
       setEditingStory(null)
+      setStorySuccess('Story updated! It is now visible on the homepage.')
     } else {
       onAddStory(storyPayload)
+      setStorySuccess('Story added! It is now visible on the homepage.')
     }
 
     setStoryForm(emptyStoryForm)
     setUploadedVideo('')
     setUploadVideoName('')
+    setUploadedPoster('')
+    setUploadPosterName('')
+    window.setTimeout(() => setStorySuccess(''), 5000)
   }
 
   const startEditProduct = (product) => {
@@ -172,13 +200,11 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
   const startEditStory = (story) => {
     setEditingProduct(null)
     setEditingStory(story)
-    setStoryForm({
-      title: story.title || '',
-      posterUrl: story.poster || '',
-      videoUrl: story.video?.startsWith('blob:') ? '' : story.video || '',
-    })
+    setStoryForm({ title: story.title || '' })
     setUploadedVideo('')
     setUploadVideoName('')
+    setUploadedPoster('')
+    setUploadPosterName('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -297,50 +323,37 @@ function AdminDashboard({ products, onAddProduct, stories, onAddStory, onUpdateP
       </section>
 
       <section className="admin-dashboard-form-section">
-        <h2>{editingStory ? 'Edit Story Video' : 'Add New Story Video'}</h2>
+        <h2>{editingStory ? 'Edit Story' : 'Add New Story'}</h2>
+        {storyError && <div className="admin-story-error">⚠️ {storyError}</div>}
+        {storySuccess && <div className="admin-story-success">✅ {storySuccess}</div>}
         <form className="admin-dashboard-form" onSubmit={handleStorySubmit}>
           <label>
-            Story Title
+            Story Title (optional)
             <input
               name="title"
               type="text"
-              required
-              placeholder="Story title"
+              placeholder="e.g. Customer Review, Before & After..."
               value={storyForm.title}
               onChange={handleStoryFieldChange}
             />
           </label>
           <label>
-            Poster Image URL
-            <input
-              name="posterUrl"
-              type="text"
-              placeholder="Poster image URL or local path"
-              value={storyForm.posterUrl}
-              onChange={handleStoryFieldChange}
-            />
+            Poster Image — Upload from PC
+            <input name="posterFile" type="file" accept="image/*" onChange={handlePosterChange} />
+            {uploadPosterName && <div className="upload-file-name">✔ Selected: {uploadPosterName}</div>}
           </label>
           <label>
-            Upload Video
+            Story Video — Upload from PC
             <input name="videoFile" type="file" accept="video/*" onChange={handleVideoChange} />
-            {uploadVideoName && <div className="upload-file-name">Selected: {uploadVideoName}</div>}
-          </label>
-          <label>
-            Or video URL
-            <input
-              name="videoUrl"
-              type="text"
-              placeholder="Remote video URL if not uploading"
-              value={storyForm.videoUrl}
-              onChange={handleStoryFieldChange}
-            />
+            {uploadVideoName && <div className="upload-file-name">✔ Selected: {uploadVideoName}</div>}
           </label>
           <div className="admin-form-actions">
-            <button type="submit">{editingStory ? 'Save Story' : 'Add Story Video'}</button>
+            <button type="submit">{editingStory ? 'Save Story' : 'Add Story'}</button>
             {editingStory && <button type="button" className="admin-cancel" onClick={cancelEdit}>Cancel</button>}
           </div>
         </form>
       </section>
+
 
       <section className="admin-dashboard-list">
         <h2>Current Products</h2>

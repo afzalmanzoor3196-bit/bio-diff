@@ -11,13 +11,13 @@ import SkinNeeds from './components/jsx/SkinNeeds.jsx'
 import HerStories from './components/jsx/HerStories.jsx'
 import Influencers from './components/jsx/Influencers.jsx'
 import defaultStories from './data/stories.js'
-import Newsletter from './components/jsx/Newsletter.jsx'
 import Footer from './components/jsx/Footer.jsx'
 import WhatsAppButton from './components/jsx/WhatsAppButton.jsx'
 import CartDrawer from './components/jsx/CartDrawer.jsx'
 import AdminLogin from './components/jsx/AdminLogin.jsx'
 import AdminDashboard from './components/jsx/AdminDashboard.jsx'
 import initialProducts from './data/products.js'
+import ProductDetails from './components/jsx/ProductDetails.jsx'
 
 const normalizeStory = (story, fallbackId = `story-${Date.now()}`) => {
   const id = story?.id ?? story?._id ?? fallbackId
@@ -25,8 +25,8 @@ const normalizeStory = (story, fallbackId = `story-${Date.now()}`) => {
     ...story,
     id,
     title: story?.title || story?.name || `Story ${id}`,
-    poster: story?.poster ?? story?.posterUrl ?? story?.image ?? '/images/stories/story-1.jpg',
-    video: story?.video ?? story?.videoUrl ?? story?.url ?? null,
+    poster: story?.poster || story?.posterUrl || story?.image || '/images/stories/story-1.jpg',
+    video: story?.video || story?.videoUrl || story?.url || null,
   }
 }
 
@@ -59,21 +59,26 @@ function AppInner() {
   })
 
   const [stories, setStories] = useState(() => {
-    const fallbackStories = defaultStories.map((story) => normalizeStory(story))
+    // Always start with the fresh default stories (Story 1, Story 2 from assets)
+    const baseStories = defaultStories.map((story) => normalizeStory(story))
 
-    if (typeof window === 'undefined') return fallbackStories
-    const saved = window.localStorage.getItem('biodiff_stories')
-    if (!saved) return fallbackStories
+    if (typeof window === 'undefined') return baseStories
+
+    // Load only ADMIN-ADDED stories (saved separately)
+    const saved = window.localStorage.getItem('biodiff_extra_stories')
+    if (!saved) return baseStories
 
     try {
       const parsed = JSON.parse(saved)
-      if (Array.isArray(parsed)) {
-        return parsed.map((story) => normalizeStory(story))
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const adminStories = parsed.map((story) => normalizeStory(story))
+        // Prepend admin stories before default stories
+        return [...adminStories, ...baseStories]
       }
-      return fallbackStories
     } catch {
-      return fallbackStories
+      // ignore parse errors
     }
+    return baseStories
   })
 
   useEffect(() => {
@@ -95,8 +100,21 @@ function AppInner() {
       }
 
       try {
-        const persistentStories = stories.map((story) => normalizeStory(story))
-        window.localStorage.setItem('biodiff_stories', JSON.stringify(persistentStories))
+        // Save ONLY admin-added stories (not the default bundled ones)
+        // Default stories always load fresh from the import
+        const defaultIds = new Set(defaultStories.map((s) => String(s.id)))
+        const adminStories = stories.filter((s) => !defaultIds.has(String(s.id)))
+        const persistable = adminStories.map((story) => {
+          const normalized = normalizeStory(story)
+          return {
+            ...normalized,
+            // blob: URLs are session-only — strip them so they don't break on reload
+            video: normalized.video && !normalized.video.startsWith('blob:') ? normalized.video : null,
+          }
+        })
+        window.localStorage.setItem('biodiff_extra_stories', JSON.stringify(persistable))
+        // Clear old key if present
+        window.localStorage.removeItem('biodiff_stories')
       } catch (error) {
         console.warn('Unable to persist story data to localStorage:', error)
       }
@@ -179,15 +197,26 @@ function AppInner() {
         <>
           <AnnouncementBar />
           <Header onCartClick={() => setCartOpen(true)} />
-          <HeroBanner />
-          <ShopCategories />
-          <RealResults />
-          <FeatureGrid />
-          <Philosophy />
-          <SkinNeeds products={products} />
-          <HerStories stories={stories} />
-          <Influencers />
-          <Newsletter />
+          {route.startsWith('product/') ? (
+            <ProductDetails
+              productId={route.replace('product/', '')}
+              products={products}
+              onBack={() => {
+                window.location.hash = ''
+              }}
+            />
+          ) : (
+            <>
+              <HeroBanner />
+              <ShopCategories />
+              <RealResults />
+              <FeatureGrid />
+              <Philosophy />
+              <SkinNeeds products={products} />
+              <HerStories stories={stories} />
+              <Influencers />
+            </>
+          )}
           <Footer />
           <WhatsAppButton />
           <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />

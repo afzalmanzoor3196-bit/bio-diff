@@ -26,8 +26,8 @@
 }
 
 .logo-img-new {
-    height: 75px;
-    /* Pehle 45px thi, sirf image barhi karne ke liye isko 75px kar diya hai */
+    height: 100px;
+    /* Pehle 75px thi, isko thora aur bara karne ke liye 100px kar diya hai */
     width: auto;
     object-fit: contain;
     display: block;

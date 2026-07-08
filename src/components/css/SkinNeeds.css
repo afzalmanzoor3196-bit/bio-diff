@@ -78,11 +78,36 @@
   border-color: #f25d95;
 }
 
+.sn-cards-wrapper {
+  position: relative;
+}
+
 .sn-cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
   margin-top: 10px;
+}
+
+/* Dots - hidden on desktop */
+.sn-dots {
+  display: none;
+}
+
+.sn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(194, 61, 116, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.sn-dot.active {
+  background: #f25d95;
+  transform: scale(1.3);
 }
 
 .sn-card {
@@ -181,18 +206,18 @@
 
 @media (max-width: 760px) {
   .sn-head {
-    display: flex; /* FIX: Switch from grid to flex to allow column-direction */
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px; /* Reduces gap slightly for mobile aesthetic */
+    gap: 20px;
   }
-  
+
   .sn-filters {
-    align-items: flex-start; /* Better alignment for mobile layout */
+    align-items: flex-start;
     width: 100%;
   }
 
-  .sn-filter-label, 
+  .sn-filter-label,
   .sn-filter-pills {
     text-align: left;
     justify-content: flex-start;
@@ -202,8 +227,41 @@
     font-size: 42px;
   }
 
+  /* Mobile Carousel/Slider */
   .sn-cards {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    margin-top: 10px;
+    padding-bottom: 4px;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .sn-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sn-card {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+    margin-right: 16px;
+    border-radius: 28px;
+  }
+
+  .sn-card:last-child {
+    margin-right: 0;
+  }
+
+  /* Show dots on mobile */
+  .sn-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
   }
 }

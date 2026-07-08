@@ -1,0 +1,498 @@
+.product-details-page {
+  padding: 60px 0;
+  background-color: #fff7fa; /* Clean soft pink-white background matching the brand */
+  min-height: 100vh;
+}
+
+.pd-back-btn {
+  background: none;
+  border: none;
+  color: var(--lime-dark);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 30px;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.pd-back-btn:hover {
+  opacity: 0.8;
+}
+
+.pd-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); /* Prevent columns from overflowing their grid tracks */
+  gap: 50px;
+  align-items: start;
+}
+
+/* Left Column: Image Gallery */
+.pd-media-column {
+  display: flex;
+  gap: 20px;
+  min-width: 0;
+  max-width: 620px; /* Limit size on extra large screens to look premium and balanced */
+  width: 100%;
+}
+
+.pd-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.pd-thumbnail {
+  width: 72px;
+  height: 72px;
+  border: 2px solid #ffe0eb; /* Soft pink border */
+  border-radius: 12px;
+  padding: 4px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.pd-thumbnail.active {
+  border-color: #f25d95; /* Active border color matching brand rose */
+}
+
+.pd-thumbnail img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.pd-main-image-container {
+  flex: 1;
+  position: relative;
+  aspect-ratio: 1 / 1.15;
+  background: #fff;
+  border-radius: 32px;
+  border: 1px solid #ffe0eb; /* Soft pink border matching cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 30px;
+  min-width: 0;
+}
+
+.pd-badge {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: #f25d95; /* Premium rose pink badge background */
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 8px 18px;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.pd-main-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* Right Column: Info & Purchase */
+.pd-info-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pd-category {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--lime-dark);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.pd-title {
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 1.15;
+  color: #5b3847; /* Dark plum color matching homepage text */
+  margin: 0 0 16px;
+}
+
+.pd-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pd-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.pd-star {
+  color: #f5b335; /* Gold/yellow star */
+  font-size: 18px;
+}
+
+.pd-reviews-count {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pd-tagline {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+}
+
+/* Claims Grid */
+.pd-claims-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 224, 235, 0.8); /* Soft pink grid border */
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.pd-claim-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pd-claim-icon {
+  background: #ffeef5; /* Light pink background */
+  color: #c33d74; /* Deep pink check icon */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.pd-claim-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7c3551; /* Elegant plum text */
+}
+
+/* Purchase Section */
+.pd-purchase-section {
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #ffe0eb; /* Soft pink border */
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(194, 61, 116, 0.02);
+}
+
+.pd-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.pd-price-label {
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.pd-price-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #c33d74; /* Deep pink price value */
+}
+
+.pd-actions-row {
+  display: flex;
+  flex-wrap: wrap; /* Wrap on smaller block widths */
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pd-qty-selector {
+  display: flex;
+  border: 1px solid #ffe0eb;
+  border-radius: 999px;
+  overflow: hidden;
+  align-items: center;
+  background: #fff;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.pd-qty-selector button {
+  background: none;
+  border: none;
+  width: 44px;
+  height: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  color: #a33f65;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pd-qty-selector button:hover {
+  background: #ffeef5;
+}
+
+.pd-qty-selector input {
+  width: 40px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #5b3847;
+  outline: none;
+  background: transparent;
+  -moz-appearance: textfield;
+}
+
+.pd-qty-selector input::-webkit-outer-spin-button,
+.pd-qty-selector input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pd-add-to-cart-btn {
+  flex: 1;
+  min-width: 200px; /* Force wrap if horizontal space is constrained */
+  background-color: #f25d95; /* Bright pink cart button */
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  height: 50px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.pd-add-to-cart-btn:hover {
+  background-color: #e04b83;
+}
+
+.pd-add-to-cart-btn:active {
+  transform: scale(0.98);
+}
+
+.pd-buy-now-btn {
+  width: 100%;
+  background-color: #a33f65; /* Deep plum brand button */
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  height: 50px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.pd-buy-now-btn:hover {
+  background-color: #8c3154;
+}
+
+.pd-buy-now-btn:active {
+  transform: scale(0.98);
+}
+
+.pd-success-msg {
+  color: #c33d74;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* Tabs Section */
+.pd-tabs-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.pd-tabs-row {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #ffe0eb;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+}
+
+.pd-tabs-row::-webkit-scrollbar {
+  display: none;
+}
+
+.pd-tab-btn {
+  background: #ffeef5; /* Soft pink tabs */
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7c3551;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pd-tab-btn:hover {
+  background-color: #ffdbe8;
+}
+
+.pd-tab-btn.active {
+  background-color: #f25d95; /* Active tab is pink */
+  border-color: #f25d95;
+  color: #fff;
+}
+
+.pd-tab-content {
+  background: #fff;
+  border: 1px solid #ffe0eb;
+  border-radius: 24px;
+  padding: 30px;
+  min-height: 200px;
+  box-shadow: 0 10px 30px rgba(194, 61, 116, 0.01);
+}
+
+.pd-tab-text p {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.pd-tab-text p:last-child {
+  margin-bottom: 0;
+}
+
+.pd-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pd-benefit-item {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.pd-benefit-title {
+  color: #c33d74;
+}
+
+.pd-ingredients-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: #a33f65;
+  margin: 24px 0 10px;
+}
+
+.pd-ingredients-header:first-child {
+  margin-top: 0;
+}
+
+.pre-wrap-style {
+  white-space: pre-line;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .pd-grid {
+    grid-template-columns: 1fr; /* Stack layout on tablets and small screens */
+    gap: 40px;
+  }
+
+  .pd-media-column {
+    flex-direction: column-reverse;
+    max-width: 100%; /* Let it fill the viewport width */
+  }
+
+  .pd-thumbnails {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pd-main-image-container {
+    aspect-ratio: 1 / 1;
+    padding: 30px;
+  }
+
+  .pd-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-details-page {
+    padding: 30px 0;
+  }
+
+  .pd-main-image-container {
+    border-radius: 24px;
+    padding: 20px;
+  }
+
+  .pd-title {
+    font-size: 26px;
+  }
+
+  .pd-claims-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .pd-purchase-section {
+    padding: 20px;
+  }
+
+  .pd-actions-row {
+    flex-direction: column;
+  }
+
+  .pd-qty-selector {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .pd-add-to-cart-btn {
+    width: 100%;
+  }
+
+  .pd-tab-content {
+    padding: 20px;
+  }
+}

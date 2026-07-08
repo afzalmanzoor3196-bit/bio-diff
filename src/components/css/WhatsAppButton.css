@@ -1,2 +1,25 @@
-.whatsapp-fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px #0003;z-index:100}
-.whatsapp-fab img{width:30px;height:30px}
+.whatsapp-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.08);
+  background-color: #20ba5a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.whatsapp-fab svg {
+  display: block;
+}

@@ -1,23 +1,31 @@
 import '../css/ShopCategories.css'
+import img1 from '../../assets/11.jpeg'
+import img2 from '../../assets/12.jpeg'
+import img3 from '../../assets/13.jpeg'
+import img4 from '../../assets/14.jpeg'
 
 const categories = [
-  { eyebrow: 'GREAT BARRIER RELIEF', title: 'Fan Fave' },
-  { eyebrow: 'DAILY ESSENTIAL', title: 'Radiant Care' },
-  { eyebrow: 'NATURAL GLOW', title: 'Anti-Aging' },
-  { eyebrow: 'BETTER TOGETHER', title: 'Duos & Kits' },
+  { eyebrow: 'GREAT BARRIER RELIEF', title: 'Fan Fave', image: img1 },
+  { eyebrow: 'DAILY ESSENTIAL', title: 'Radiant Care', image: img2 },
+  { eyebrow: 'NATURAL GLOW', title: 'Anti-Aging', image: img3 },
+  { eyebrow: 'BETTER TOGETHER', title: 'Duos & Kits', image: img4 },
 ]
 
 function ShopCategories() {
   return (
-    <section id="shop" className="shop-categories">
-      <div className="container shop-categories-inner">
-        <h2 className="shop-title">Shop</h2>
-        <div className="shop-cats">
+    <section id="shop" className="shop-categories-grid-section">
+      <div className="container">
+        <div className="shop-grid">
           {categories.map((cat) => (
-            <a href="#" className="shop-cat" key={cat.title}>
-              <span className="shop-cat-eyebrow">{cat.eyebrow}</span>
-              <span className="shop-cat-title">{cat.title}</span>
-            </a>
+            <div className="shop-grid-row" key={cat.title}>
+              <div className="shop-grid-image">
+                <img src={cat.image} alt={cat.title} />
+              </div>
+              <div className="shop-grid-text">
+                <span className="shop-cat-eyebrow">{cat.eyebrow}</span>
+                <span className="shop-cat-title">{cat.title}</span>
+              </div>
+            </div>
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import '../css/SkinNeeds.css'
 import img11 from '../../assets/11.jpeg'
@@ -51,13 +51,45 @@ function SkinNeeds({ products = defaultProducts }) {
   const [active, setActive] = useState(filters[0])
   const { addToCart } = useCart()
   const [justAdded, setJustAdded] = useState(null)
+  const [slideIndex, setSlideIndex] = useState(0)
+  const sliderRef = useRef(null)
 
-  const visibleProducts = useMemo(() => products, [products])
+  const visibleProducts = useMemo(() => {
+    const getPriority = (p) => {
+      const name = (p.name || '').toLowerCase()
+      if (name.includes('cream')) return 1
+      if (name.includes('facewash') || name.includes('face wash') || name.includes('wash')) return 2
+      if (name.includes('sunscreen') || name.includes('sunblock') || name.includes('spf')) return 3
+      return 4
+    }
+    return [...products].sort((a, b) => getPriority(a) - getPriority(b))
+  }, [products])
 
   const handleAdd = (product) => {
     addToCart(product)
     setJustAdded(product.id)
     window.setTimeout(() => setJustAdded(null), 1200)
+  }
+
+  // Track scroll position to update active dot
+  useEffect(() => {
+    const el = sliderRef.current
+    if (!el) return
+    const onScroll = () => {
+      const cardWidth = el.offsetWidth
+      const idx = Math.round(el.scrollLeft / cardWidth)
+      setSlideIndex(idx)
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Scroll to dot index
+  const goToSlide = (idx) => {
+    const el = sliderRef.current
+    if (!el) return
+    el.scrollTo({ left: idx * el.offsetWidth, behavior: 'smooth' })
+    setSlideIndex(idx)
   }
 
   return (
@@ -95,25 +127,50 @@ function SkinNeeds({ products = defaultProducts }) {
           </div>
         </div>
 
-        <div className="sn-cards">
-          {visibleProducts.map((p) => (
-            <div className="sn-card" key={p.id}>
-              <div className="sn-card-media">
-                {p.badge && <span className="sn-badge">{p.badge}</span>}
-                <img src={p.image} alt={p.name} />
-                <button
-                  type="button"
-                  className={`sn-add ${justAdded === p.id ? 'added' : ''}`}
-                  aria-label={`Add ${p.name} to cart`}
-                  onClick={() => handleAdd(p)}
-                >
-                  {justAdded === p.id ? '✓' : '+'}
-                </button>
+        <div className="sn-cards-wrapper">
+          <div className="sn-cards" ref={sliderRef}>
+            {visibleProducts.map((p) => (
+              <div
+                className="sn-card"
+                key={p.id}
+                onClick={() => {
+                  window.location.hash = `product/${p.id}`
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="sn-card-media">
+                  {p.badge && <span className="sn-badge">{p.badge}</span>}
+                  <img src={p.image} alt={p.name} />
+                  <button
+                    type="button"
+                    className={`sn-add ${justAdded === p.id ? 'added' : ''}`}
+                    aria-label={`Add ${p.name} to cart`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleAdd(p)
+                    }}
+                  >
+                    {justAdded === p.id ? '✓' : '+'}
+                  </button>
+                </div>
+                <h4>{p.name}</h4>
+                <span className="sn-price">{p.price}</span>
               </div>
-              <h4>{p.name}</h4>
-              <span className="sn-price">{p.price}</span>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Dots - only visible on mobile */}
+          <div className="sn-dots">
+            {visibleProducts.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={`sn-dot ${slideIndex === idx ? 'active' : ''}`}
+                onClick={() => goToSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

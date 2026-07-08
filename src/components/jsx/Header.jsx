@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import '../css/Header.css'
-import logo from '../../assets/Logo.2.png'
+import logo from '../../assets/logo (2).PNG'
 
 const navLinks = [
   { label: 'Home', href: '#' },

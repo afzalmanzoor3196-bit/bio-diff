@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import '../css/HerStories.css'
 import story1Video from '../../assets/Story 1.mp4'
+import story2Video from '../../assets/Story 2.mp4'
 
-const posters = ['/images/stories/story-1.jpg', '/images/stories/story-2.jpg', '/images/stories/story-3.jpg']
-const defaultStories = Array.from({ length: 10 }, (_, index) => ({
-  id: index + 1,
-  poster: posters[index % posters.length],
-  video: index === 0 ? story1Video : null,
-}))
+// Fallback: only used if no stories prop is passed
+const defaultStories = [
+  { id: 1, title: 'Story 1', poster: null, video: story1Video },
+  { id: 2, title: 'Story 2', poster: null, video: story2Video },
+]
 
 function HerStories({ stories = defaultStories }) {
   const [muted, setMuted] = useState([])
@@ -59,6 +59,19 @@ function HerStories({ stories = defaultStories }) {
     videoRefs.current = []
   }, [stories])
 
+  // Auto-play the first video after refs are set
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const firstVideo = videoRefs.current[0]
+      if (firstVideo) {
+        firstVideo.muted = true
+        firstVideo.play().catch(() => {})
+        setPlaying((p) => p.map((_, idx) => idx === 0))
+      }
+    }, 300)
+    return () => window.clearTimeout(timer)
+  }, [stories])
+
   useEffect(() => {
     document.body.style.overflow = selectedStory ? 'hidden' : ''
     return () => {
@@ -75,8 +88,7 @@ function HerStories({ stories = defaultStories }) {
   }
 
   const goToProducts = () => {
-    const target = document.getElementById('skin-needs')
-    if (target) target.scrollIntoView({ behavior: 'smooth' })
+    window.location.hash = 'product/tea-tree-face-wash'
   }
 
   return (
@@ -120,9 +132,12 @@ function HerStories({ stories = defaultStories }) {
                     ref={(el) => (videoRefs.current[i] = el)}
                     className="hs-video-element"
                     src={storyVideo}
-                    muted={muted[i]}
+                    poster={storyPoster}
+                    muted
+                    autoPlay
                     loop
                     playsInline
+                    preload="auto"
                     controls={false}
                   />
                 ) : (
