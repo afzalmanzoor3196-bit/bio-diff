@@ -1,8 +1,8 @@
 import '../css/ShopCategories.css'
-import img1 from '../../assets/11.jpeg'
-import img2 from '../../assets/12.jpeg'
-import img3 from '../../assets/13.jpeg'
-import img4 from '../../assets/14.jpeg'
+import img1 from '../../assets/asdf.jpeg'
+import img2 from '../../assets/Slide 1.jpeg'
+import img3 from '../../assets/Slide 2.jpeg'
+import img4 from '../../assets/WhatsApp Image 2026-07-07 at 8.22.50 PM (1).jpeg'
 
 const categories = [
   { eyebrow: 'GREAT BARRIER RELIEF', title: 'Fan Fave', image: img1 },

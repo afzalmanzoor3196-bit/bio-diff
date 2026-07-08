@@ -57,10 +57,16 @@ function SkinNeeds({ products = defaultProducts }) {
   const visibleProducts = useMemo(() => {
     const getPriority = (p) => {
       const name = (p.name || '').toLowerCase()
-      if (name.includes('cream')) return 1
+      // Pure creams first (exclude sets that happen to mention "cream")
+      if (name.includes('cream') && !name.includes('set')) return 1
+      // Face washes second
       if (name.includes('facewash') || name.includes('face wash') || name.includes('wash')) return 2
+      // Sunblocks / sunscreens third
       if (name.includes('sunscreen') || name.includes('sunblock') || name.includes('spf')) return 3
-      return 4
+      // Sets / bundles fourth
+      if (name.includes('set') || name.includes('bundle') || name.includes('kit')) return 4
+      // Everything else last
+      return 5
     }
     return [...products].sort((a, b) => getPriority(a) - getPriority(b))
   }, [products])
