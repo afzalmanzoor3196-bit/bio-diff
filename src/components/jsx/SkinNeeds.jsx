@@ -1,49 +1,79 @@
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { useCart } from '../../context/CartContext.jsx'
 import '../css/SkinNeeds.css'
-import img11 from '../../assets/11.jpeg'
-import img12 from '../../assets/12.jpeg'
-import img13 from '../../assets/13.jpeg'
-import img14 from '../../assets/14.jpeg'
+import product1 from '../../assets/Product 1.jpeg'
+import product2 from '../../assets/Product 2.jpeg'
+import product3 from '../../assets/Product 3.jpeg'
+import product4 from '../../assets/Product 4.jpeg'
+import product5 from '../../assets/Product 5.jpeg'
+import product6 from '../../assets/Product 6.jpeg'
+import product7 from '../../assets/Product 7.jpeg'
 
 const filters = ['ACNE & BREAKOUTS', 'HYPERPIGMENTATION', 'DRY & DEHYDRATED SKIN', 'KOREAN GLASS SKIN']
 
 const defaultProducts = [
   {
-    id: 'tea-tree-face-wash',
-    category: 'ACNE & BREAKOUTS',
-    badge: 'TRENDING NOW 🔥',
-    image: img11,
-    name: 'Tea Tree & Salicylic Acid Face Wash',
-    price: 'Rs.1,099',
-    priceValue: 1099,
+    id: 'biodiff-glutathione-vitamin-c-intensive-skin-brightening-cream',
+    category: 'HYPERPIGMENTATION',
+    badge: 'GLOW FORMULA 🪄',
+    image: product1,
+    name: 'BioDiff Glutathione + Vitamin C Intensive Skin Brightening Cream',
+    price: 'Rs.1,880',
+    priceValue: 1880,
   },
   {
-    id: 'tinted-sunscreen-spf60',
+    id: 'biodiff-glutathione-vit-c-intensive-skin-brightening-cream-(3in1)',
+    category: 'DRY & DEHYDRATED SKIN',
+    badge: 'BEST SELLER 🔥',
+    image: product2,
+    name: 'BioDiff Glutathione + Vit-C Intensive Skin Brightening Cream (3in1)',
+    price: 'Rs.1,200',
+    priceValue: 1200,
+  },
+  {
+    id: 'biodiff-glutathion-brightening-facewash',
+    category: 'HYPERPIGMENTATION',
+    badge: 'NEW LAUNCH 💎',
+    image: product3,
+    name: 'BioDiff Glutathion Brightening Facewash (2 Minutes Instant Whitening)',
+    price: 'Rs.1,200',
+    priceValue: 1200,
+  },
+  {
+    id: 'mandelic-acid-pro-(exfoliating-cream-&-spotless-treatment-set)',
+    category: 'ACNE & BREAKOUTS',
+    badge: 'NEW LAUNCH 💎',
+    image: product4,
+    name: 'Mandelic Acid Pro (Exfoliating Cream & Spotless Treatment Set)',
+    price: 'Rs.2,000',
+    priceValue: 2000,
+  },
+  {
+    id: 'biodiff-mandelac-retinol-10%-facewash-(exfoliates-&-smoothes)',
+    category: 'KOREAN GLASS SKIN',
+    badge: 'HOT SELLING 🔥',
+    image: product5,
+    name: 'BioDiff Mandelac Retinol 10% Facewash (Exfoliates & Smoothes)',
+    price: 'Rs.1,200',
+    priceValue: 1200,
+  },
+  {
+    id: 'spectra-block-spf60-sunblock',
     category: 'HYPERPIGMENTATION',
     badge: 'TOP RATED 🌍',
-    image: img12,
-    name: 'Tinted Sunscreen SPF 60',
+    image: product6,
+    name: 'Spectra Block SPF 60 Broad Spectrum Sunblock',
     price: 'Rs.1,599',
     priceValue: 1599,
   },
   {
-    id: 'anti-acne-serum',
-    category: 'DRY & DEHYDRATED SKIN',
-    badge: null,
-    image: img13,
-    name: 'Anti-Acne Face Serum (Clear Skin)',
-    price: 'Rs.2,099',
-    priceValue: 2099,
-  },
-  {
-    id: 'vitamin-c-serum',
-    category: 'KOREAN GLASS SKIN',
-    badge: 'KOREAN GLOW 💗',
-    image: img14,
-    name: 'Vitamin C Face Serum (Glow)',
-    price: 'Rs.2,099',
-    priceValue: 2099,
+    id: 'spectra-block-mega-block-3in1-spf100',
+    category: 'HYPERPIGMENTATION',
+    badge: 'ULTRA SHIELD ☀️',
+    image: product7,
+    name: 'Spectra Block Mega Block 3in1 SPF 100 Intense Sunblock Cream',
+    price: 'Rs.1,899',
+    priceValue: 1899,
   },
 ]
 
@@ -55,20 +85,8 @@ function SkinNeeds({ products = defaultProducts }) {
   const sliderRef = useRef(null)
 
   const visibleProducts = useMemo(() => {
-    const getPriority = (p) => {
-      const name = (p.name || '').toLowerCase()
-      // Pure creams first (exclude sets that happen to mention "cream")
-      if (name.includes('cream') && !name.includes('set')) return 1
-      // Face washes second
-      if (name.includes('facewash') || name.includes('face wash') || name.includes('wash')) return 2
-      // Sunblocks / sunscreens third
-      if (name.includes('sunscreen') || name.includes('sunblock') || name.includes('spf')) return 3
-      // Sets / bundles fourth
-      if (name.includes('set') || name.includes('bundle') || name.includes('kit')) return 4
-      // Everything else last
-      return 5
-    }
-    return [...products].sort((a, b) => getPriority(a) - getPriority(b))
+    // Show products in the exact order they are defined (Product 1 → 7)
+    return [...products]
   }, [products])
 
   const handleAdd = (product) => {
