@@ -53,14 +53,13 @@ function AppInner() {
     if (!saved) return initialProducts
     try {
       const parsed = JSON.parse(saved)
-      // Re-hydrate images for default products: Vite changes hashed asset filenames
-      // on every build/deploy, so stored paths (e.g. /assets/Product 1-Cvdb2kt2.jpeg)
-      // become 404. We always use the current imported asset for known product IDs.
-      return parsed.map((p) => {
-        const freshImage = PRODUCT_IMAGE_MAP[p.id]
-        if (freshImage) return { ...p, image: freshImage }
-        return p // admin-added products keep their base64 image
-      })
+      // Find admin-added products (those whose IDs are not in the default products list)
+      const defaultIds = new Set(initialProducts.map((p) => p.id))
+      const adminProducts = parsed.filter((p) => !defaultIds.has(p.id))
+      
+      // We always return the latest default products from the code (initialProducts)
+      // plus any custom products the admin added.
+      return [...initialProducts, ...adminProducts]
     } catch {
       return initialProducts
     }
