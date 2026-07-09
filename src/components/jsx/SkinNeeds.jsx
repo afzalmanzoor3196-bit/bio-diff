@@ -9,7 +9,7 @@ import product5 from '../../assets/Product 5.jpeg'
 import product6 from '../../assets/Product 6.jpeg'
 import product7 from '../../assets/Product 7.jpeg'
 
-const filters = ['ACNE & BREAKOUTS', 'HYPERPIGMENTATION', 'DRY & DEHYDRATED SKIN', 'KOREAN GLASS SKIN']
+const filters = ['ALL', 'ACNE & BREAKOUTS', 'HYPERPIGMENTATION', 'DRY & DEHYDRATED SKIN', 'KOREAN GLASS SKIN']
 
 const defaultProducts = [
   {
@@ -78,22 +78,37 @@ const defaultProducts = [
 ]
 
 function SkinNeeds({ products = defaultProducts }) {
-  const [active, setActive] = useState(filters[0])
+  const [active, setActive] = useState('ALL')
   const { addToCart } = useCart()
   const [justAdded, setJustAdded] = useState(null)
   const [slideIndex, setSlideIndex] = useState(0)
   const sliderRef = useRef(null)
 
-  const visibleProducts = useMemo(() => {
-    // Show products in the exact order they are defined (Product 1 → 7)
-    return [...products]
+  // Get all unique categories from the current products prop
+  const availableCategories = useMemo(() => {
+    const cats = new Set(products.map((p) => p.category?.toUpperCase()).filter(Boolean))
+    return ['ALL', ...cats]
   }, [products])
+
+  // Filter products by selected category
+  const visibleProducts = useMemo(() => {
+    if (active === 'ALL') return [...products]
+    return products.filter((p) => p.category?.toUpperCase() === active)
+  }, [products, active])
 
   const handleAdd = (product) => {
     addToCart(product)
     setJustAdded(product.id)
     window.setTimeout(() => setJustAdded(null), 1200)
   }
+
+  // Reset slide index when filter changes
+  useEffect(() => {
+    setSlideIndex(0)
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+    }
+  }, [active])
 
   // Track scroll position to update active dot
   useEffect(() => {
@@ -137,7 +152,7 @@ function SkinNeeds({ products = defaultProducts }) {
           <div className="sn-filters">
             <span className="sn-filter-label">FILTER BY CONCERN</span>
             <div className="sn-filter-pills">
-              {filters.map((f) => (
+              {availableCategories.map((f) => (
                 <button
                   type="button"
                   key={f}
@@ -151,51 +166,57 @@ function SkinNeeds({ products = defaultProducts }) {
           </div>
         </div>
 
-        <div className="sn-cards-wrapper">
-          <div className="sn-cards" ref={sliderRef}>
-            {visibleProducts.map((p) => (
-              <div
-                className="sn-card"
-                key={p.id}
-                onClick={() => {
-                  window.location.hash = `product/${p.id}`
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <div className="sn-card-media">
-                  {p.badge && <span className="sn-badge">{p.badge}</span>}
-                  <img src={p.image} alt={p.name} />
-                  <button
-                    type="button"
-                    className={`sn-add ${justAdded === p.id ? 'added' : ''}`}
-                    aria-label={`Add ${p.name} to cart`}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleAdd(p)
-                    }}
-                  >
-                    {justAdded === p.id ? '✓' : '+'}
-                  </button>
+        {visibleProducts.length === 0 ? (
+          <div className="sn-empty">
+            <p>No products found for this category.</p>
+          </div>
+        ) : (
+          <div className="sn-cards-wrapper">
+            <div className="sn-cards" ref={sliderRef}>
+              {visibleProducts.map((p) => (
+                <div
+                  className="sn-card"
+                  key={p.id}
+                  onClick={() => {
+                    window.location.hash = `product/${p.id}`
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="sn-card-media">
+                    {p.badge && <span className="sn-badge">{p.badge}</span>}
+                    <img src={p.image} alt={p.name} />
+                    <button
+                      type="button"
+                      className={`sn-add ${justAdded === p.id ? 'added' : ''}`}
+                      aria-label={`Add ${p.name} to cart`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleAdd(p)
+                      }}
+                    >
+                      {justAdded === p.id ? '✓' : '+'}
+                    </button>
+                  </div>
+                  <h4>{p.name}</h4>
+                  <span className="sn-price">{p.price}</span>
                 </div>
-                <h4>{p.name}</h4>
-                <span className="sn-price">{p.price}</span>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          {/* Dots - only visible on mobile */}
-          <div className="sn-dots">
-            {visibleProducts.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className={`sn-dot ${slideIndex === idx ? 'active' : ''}`}
-                onClick={() => goToSlide(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
+            {/* Dots - only visible on mobile */}
+            <div className="sn-dots">
+              {visibleProducts.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`sn-dot ${slideIndex === idx ? 'active' : ''}`}
+                  onClick={() => goToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )

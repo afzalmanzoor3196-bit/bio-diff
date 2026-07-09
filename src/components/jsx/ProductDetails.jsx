@@ -9,7 +9,8 @@ import product5 from '../../assets/Product 5.jpeg'
 import product6 from '../../assets/Product 6.jpeg'
 import product7 from '../../assets/Product 7.jpeg'
 
-const STATIC_FALLBACK_PRODUCTS = [
+// Static fallback: only used if the product is NOT found in the live products prop
+const STATIC_PRODUCTS = [
   {
     id: 'biodiff-glutathione-vitamin-c-intensive-skin-brightening-cream',
     category: 'HYPERPIGMENTATION',
@@ -76,43 +77,6 @@ const STATIC_FALLBACK_PRODUCTS = [
 ]
 
 const PRODUCT_DETAILS_MAP = {
-  'tea-tree-face-wash': {
-    reviewsCount: 17,
-    rating: 5,
-    tagLine: "Trusted by Pakistan's first selling face wash since 2021, with numerous glowing reviews on TikTok/Insta. 🔥",
-    claims: [
-      'Dermatologically Tested',
-      'Suitable For All Skin Types',
-      'Paraben & Sulphate Free',
-      'Made With Natural Ingredients',
-      'Clinically Proven Ingredients',
-      'Cruelty Free'
-    ],
-    tabs: {
-      details: `Trusted by Pakistan's first selling face wash since 2021, with numerous glowing reviews on TikTok/Insta. 😊`,
-      benefits: [
-        { title: 'Clears Acne & Pimples', desc: 'Helps to control acne and prevent future breakouts.' },
-        { title: 'Controls Oiliness', desc: 'Regulates excessive oil production, reducing shine and greasiness.' },
-        { title: 'Blemish Control', desc: 'Minimizes the appearance of blemishes and hyperpigmentation.' },
-        { title: 'Unclogs Pores', desc: 'Removes whiteheads, blackheads, and other impurities from pores.' }
-      ],
-      about: `A well-suited face wash for acne-prone skin helps you fight excess sebum while maintaining natural oil levels. It proficiently unclogs pores and visibly minimizes your skin fading acne scars and giving you a healthy glow and professional skin care.
-
-Besides, the salicylic acid's rigorous action breaks the bond of dead skin cells, exfoliating your pores and preventing acne breakout.
-
-The anti-inflammatory ingredients like tea tree oil are rich to fight off host bacteria and skin irritation. Niacinamide stimulates cell growth and improves elasticity giving you a wrinkle-free and radiant look altogether. Lavender significantly decreases hyperpigmentation without drying your skin and promoting brighter and glowing skin.`,
-      howToUse: `For Better results use foam with this face wash.
-
-Damp your face and neck, apply a small amount while massaging in circular motions, rinse well and pat dry. You can use Revival Naturals oil-free cream after washing your face at night.`,
-      ingredients: `KEY INGREDIENTS:
-- 2% Salicylic Acid: Helps clear clogged pores, which can lead to breakouts.
-- Tea Tree Oil: The essential ingredient to control bacteria that cause acne.
-- Witch Hazel: Soothes skin irritation, reduces inflammation, and tightens pores.
-
-COMPLETE INGREDIENTS:
-AQUA/WATER/EAU, COCAMIDOPROPYL BETAINE, COCAMIDE DEA, NIACINAMIDE, SALICYLIC ACID, TEA TREE EXTRACT, WITCH HAZEL EXTRACT, LAVENDER OIL, EXTRACTION OF ALOE VERA, PANTHENOL, GLYCERIN, DMDM HYDANTOIN, DISODIUM EDTA, COLORING (CI 19140 & CI 42090).`
-    }
-  },
   'biodiff-glutathione-vitamin-c-intensive-skin-brightening-cream': {
     reviewsCount: 28,
     rating: 5,
@@ -187,6 +151,41 @@ COMPLETE INGREDIENTS:
 AQUA, CAPRYLIC/CAPRIC TRIGLYCERIDE, GLUTATHIONE, ASCORBYL GLUCOSIDE (VITAMIN C), ALPHA ARBUTIN, NIACINAMIDE, ALOE BARBADENSIS LEAF JUICE, PANTHENOL, GLYCERIN, TOCOPHERYL ACETATE, ALLANTOIN, CARBOMER, DISODIUM EDTA, PHENOXYETHANOL.`
     }
   },
+  'biodiff-glutathion-brightening-facewash': {
+    reviewsCount: 36,
+    rating: 5,
+    tagLine: 'Instantly brightens in just 2 minutes with powerful Glutathione formulation. ✨',
+    claims: [
+      'Dermatologically Tested',
+      'Suitable For All Skin Types',
+      'Paraben & Sulphate Free',
+      'Made With Natural Ingredients',
+      'Clinically Proven Ingredients',
+      'Cruelty Free'
+    ],
+    tabs: {
+      details: `Instantly brightens in just 2 minutes with powerful Glutathione formulation. ✨ Experience radiant skin from the very first wash.`,
+      benefits: [
+        { title: 'Instant 2-Min Whitening', desc: 'Advanced Glutathione complex delivers visible brightening from the first use.' },
+        { title: 'Deep Pore Cleanse', desc: 'Removes dirt, excess oil, and impurities from deep within pores.' },
+        { title: 'Fades Dark Spots', desc: 'Regular use reduces hyperpigmentation and dark patches effectively.' },
+        { title: 'Refreshing Lather', desc: 'Rich creamy lather gently cleanses without stripping natural moisture.' }
+      ],
+      about: `BioDiff Glutathion Brightening Facewash is formulated with high-concentration Glutathione to deliver visible skin brightening results in as little as 2 minutes. The unique formula penetrates deeply into the skin to inhibit melanin formation and clear away surface impurities.
+
+Enriched with Vitamin C and skin-soothing botanical extracts, this facewash works to unify skin tone, fade dark patches, and reveal a luminous complexion. Suitable for daily use.`,
+      howToUse: `Wet your face and neck with lukewarm water.
+
+Apply a small amount to your palms and work into a lather. Massage gently onto your face for 2 minutes using circular motions. Rinse thoroughly and pat dry. Use twice daily for best results.`,
+      ingredients: `KEY INGREDIENTS:
+- Glutathione: Inhibits melanin synthesis for instant skin brightening.
+- Vitamin C (Ascorbyl Glucoside): Antioxidant that brightens and protects skin.
+- Niacinamide: Reduces pore size and controls oil production.
+
+COMPLETE INGREDIENTS:
+AQUA, SODIUM LAURETH SULFATE, COCAMIDOPROPYL BETAINE, COCAMIDE DEA, GLUTATHIONE, ASCORBYL GLUCOSIDE, NIACINAMIDE, GLYCERIN, PANTHENOL, ALOE BARBADENSIS EXTRACT, ALLANTOIN, DMDM HYDANTOIN, DISODIUM EDTA, PHENOXYETHANOL.`
+    }
+  },
   'mandelic-acid-pro-(exfoliating-cream-&-spotless-treatment-set)': {
     reviewsCount: 35,
     rating: 5,
@@ -251,7 +250,7 @@ It thoroughly lifts dirt, excess sebum, and makeup residues, while active ingred
 This face wash stimulates microcirculation and healthy cellular turn-over, meaning every wash reveals brighter, smoother, and younger-looking skin without stripping away essential moisture.`,
       howToUse: `Dampen your face and neck with lukewarm water.
 
-Dispense a coin-sized amount of facewery and work into a rich lather. Massage gently onto your face using circular motions, avoiding the eye contour. Rinse thoroughly and pat dry. Use once or twice daily. Follow up with your favorite toner and moisturizer.`,
+Dispense a coin-sized amount and work into a rich lather. Massage gently onto your face using circular motions, avoiding the eye contour. Rinse thoroughly and pat dry. Use once or twice daily. Follow up with your favorite toner and moisturizer.`,
       ingredients: `KEY INGREDIENTS:
 - Mandelic Acid: Gentle AHA that refines texture and brightens.
 - Retinol (Vitamin A): Promotes collagen synthesis and skin cell regeneration.
@@ -261,10 +260,10 @@ COMPLETE INGREDIENTS:
 AQUA, SODIUM LAURETH SULFATE, COCAMIDOPROPYL BETAINE, COCAMIDE DEA, MANDELIC ACID, RETINOL LIPOSOMES, NIACINAMIDE, PANTHENOL, GLYCERIN, TOCOPHERYL ACETATE, ALOE BARBADENSIS EXTRACT, SODIUM CHLORIDE, CITRIC ACID, DMDM HYDANTOIN, PHENOXYETHANOL.`
     }
   },
-  'tinted-sunscreen-spf60': {
+  'spectra-block-spf60-sunblock': {
     reviewsCount: 31,
     rating: 5,
-    tagLine: 'Advanced hybrid protection with lightweight skin-tint for an instant airbrushed glow. 🌍',
+    tagLine: 'Advanced broad spectrum protection SPF 60 for daily sun defense. ☀️',
     claims: [
       'Dermatologically Tested',
       'Suitable For All Skin Types',
@@ -274,34 +273,34 @@ AQUA, SODIUM LAURETH SULFATE, COCAMIDOPROPYL BETAINE, COCAMIDE DEA, MANDELIC ACI
       'Cruelty Free'
     ],
     tabs: {
-      details: `Advanced hybrid protection with lightweight skin-tint for an instant airbrushed glow. 🌍 Broad-spectrum SPF 60 filters out UVA/UVB rays.`,
+      details: `Advanced broad spectrum protection SPF 60 for daily sun defense. ☀️ Guards against UVA/UVB rays to prevent tanning, dark spots, and premature aging.`,
       benefits: [
-        { title: 'Broad Spectrum SPF 60', desc: 'Guards against sunburns, skin cancers, and premature aging.' },
-        { title: 'Lightweight Tint', desc: 'Blends seamlessly to blur skin imperfections and even out tone.' },
-        { title: 'Non-Greasy Finish', desc: 'Oil-free formula that controls shine and leaves a velvety matte feel.' },
-        { title: 'Shields Skin Barrier', desc: 'Provides moisture locks and environmental shield.' }
+        { title: 'Broad Spectrum SPF 60', desc: 'Guards against sunburns, skin cancers, and premature aging from UV rays.' },
+        { title: 'Prevents Tanning', desc: 'Creates a protective shield that prevents UV-induced skin darkening.' },
+        { title: 'Non-Greasy Finish', desc: 'Oil-free formula that controls shine and leaves a comfortable, matte feel.' },
+        { title: 'Antioxidant Protection', desc: 'Fights free radical damage to maintain youthful, healthy skin.' }
       ],
-      about: `Our Tinted Sunscreen SPF 60 acts as a protective shield and a perfecting BB cream in one. Designed for everyday defense, it provides broad-spectrum block against ultraviolet radiation, preventing cellular damage, age spots, and fine lines.
+      about: `Spectra Block SPF 60 Broad Spectrum Sunblock is your everyday defence against sun damage. Engineered for Pakistani climate conditions, it provides reliable protection against UVA and UVB radiation.
 
-The intelligent pigment adapts to your skin shade, blurring pores, blemishes, and minor scars without heavy makeup look.
+The lightweight formula absorbs quickly without leaving a white cast or greasy residue. Suitable for daily use under makeup.
 
-The non-comedogenic base hydrates and calms skin, absorbing oil and leaving a flawless matte finish.`,
+Regular use prevents tan, dark spots, and premature aging while keeping skin healthy and hydrated.`,
       howToUse: `Apply generously to your face and neck 15-20 minutes before sun exposure.
 
-Massage gently until evenly blended. Reapply every 2 hours if you are outdoors, sweating, or swimming.`,
+Massage gently until evenly blended. Reapply every 2 hours if you are outdoors, sweating, or swimming. Use as the last step in your morning skincare routine before makeup.`,
       ingredients: `KEY INGREDIENTS:
 - Zinc Oxide & Titanium Dioxide: Physical blockers that reflect solar radiation.
 - Niacinamide: Calms redness, controls sebum, and brightens.
 - Vitamin E: Provides heavy antioxidant power to fight skin damage.
 
 COMPLETE INGREDIENTS:
-AQUA, ZINC OXIDE, TITANIUM DIOXIDE, CAPRYLIC/CAPRIC TRIGLYCERIDE, NIACINAMIDE, GLYCERIN, TOCOPHERYL ACETATE, IRON OXIDES (CI 77491, CI 77492, CI 77499), PHENOXYETHANOL.`
+AQUA, ZINC OXIDE, TITANIUM DIOXIDE, CAPRYLIC/CAPRIC TRIGLYCERIDE, NIACINAMIDE, GLYCERIN, TOCOPHERYL ACETATE, PHENOXYETHANOL.`
     }
   },
-  'anti-acne-serum': {
-    reviewsCount: 22,
+  'spectra-block-mega-block-3in1-spf100': {
+    reviewsCount: 24,
     rating: 5,
-    tagLine: 'Clears active breakouts, controls sebum production, and calms irritated skin. 🌿',
+    tagLine: 'Ultra-high SPF 100 triple protection formula for intense sun shielding. ☀️',
     claims: [
       'Dermatologically Tested',
       'Suitable For All Skin Types',
@@ -311,34 +310,40 @@ AQUA, ZINC OXIDE, TITANIUM DIOXIDE, CAPRYLIC/CAPRIC TRIGLYCERIDE, NIACINAMIDE, G
       'Cruelty Free'
     ],
     tabs: {
-      details: `Clears active breakouts, controls sebum production, and calms irritated skin. 🌿 Formulated with Salicylic Acid and Niacinamide.`,
+      details: `Ultra-high SPF 100 triple protection formula for intense sun shielding. ☀️ The 3-in-1 formula moisturizes, brightens, and protects in a single step.`,
       benefits: [
-        { title: 'Controls Breakouts', desc: 'Quickly reduces acne bumps, swelling, and redness.' },
-        { title: 'Fades Acne Marks', desc: 'Accelerates healing of dark spots and hyperpigmentation.' },
-        { title: 'Refines Pores', desc: 'Clears cellular waste from pore walls to tighten skin.' },
-        { title: 'Balances Sebum', desc: 'Regulates oil output, preventing future blockages.' }
+        { title: 'Ultra SPF 100 Protection', desc: 'Maximum sun protection for outdoor activities and intense sun exposure.' },
+        { title: '3-in-1 Formula', desc: 'Moisturizes, brightens, and shields skin all in one easy step.' },
+        { title: 'Prevents Hyperpigmentation', desc: 'Prevents melanin overproduction caused by UV exposure and sun damage.' },
+        { title: 'Sweat & Water Resistant', desc: 'Stays effective even in humid conditions and light sweating.' }
       ],
-      about: `This high-performance Anti-Acne Face Serum is a targeted treatment designed for acne-prone skin. It combines gentle chemical exfoliation with skin barrier nourishment to treat breakouts without causing skin dryness.
+      about: `Spectra Block Mega Block 3-in-1 SPF 100 is our most powerful sun protection formula. Designed for those who spend significant time outdoors, it provides maximum UV filtration at the highest SPF rating.
 
-Salicylic Acid penetrates deep inside pores to dissolve sebum and dead cells, preventing blackheads and pimples.
+The 3-in-1 action moisturizes dry skin, brightens dull complexions, and creates an impenetrable barrier against harmful solar radiation.
 
-Niacinamide acts as a calming agent, minimizing skin inflammation and fading acne scars. Combined with hydrating Hyaluronic Acid, it maintains skin health.`,
-      howToUse: `Apply 3 to 4 drops onto your clean, dry face in the morning and evening.
+The cream texture blends seamlessly into all skin tones and provides long-lasting protection without frequent reapplication.`,
+      howToUse: `Apply a generous, even layer to all exposed areas of skin, including face, neck, and hands.
 
-Massage gently until absorbed. Follow up with moisturizer. Always use sun protection during the day.`,
+Apply 20-30 minutes before going outdoors. Reapply after swimming, sweating, or every 3 hours during prolonged sun exposure. Use daily for best results.`,
       ingredients: `KEY INGREDIENTS:
-- 2% Salicylic Acid (BHA): Clears pore blockage and targets acne.
-- 5% Niacinamide: Brightens skin, fades acne scars, and controls oil.
-- Hyaluronic Acid: Restores cellular hydration.
+- High SPF UV Filters (SPF 100): Maximum UVA/UVB radiation blocking complex.
+- Hyaluronic Acid: Deep hydration and moisture retention.
+- Skin Brightening Complex: Evens skin tone and prevents UV-induced dark spots.
 
 COMPLETE INGREDIENTS:
-AQUA, NIACINAMIDE, PROPYLENE GLYCOL, SALICYLIC ACID, HYALURONIC ACID, ALOE LEAF EXTRACT, ALLANTOIN, XANTHAN GUM, PHENOXYETHANOL.`
+AQUA, OCTOCRYLENE, BUTYL METHOXYDIBENZOYLMETHANE, ETHYLHEXYL SALICYLATE, TITANIUM DIOXIDE, ZINC OXIDE, HYALURONIC ACID, NIACINAMIDE, GLYCERIN, TOCOPHERYL ACETATE, PHENOXYETHANOL.`
     }
-  },
-  'vitamin-c-serum': {
-    reviewsCount: 38,
+  }
+}
+
+// Generate high-quality fallback details for admin-added products
+function generateFallbackDetails(product) {
+  return {
+    reviewsCount: Math.floor(Math.random() * 20) + 10,
     rating: 5,
-    tagLine: 'Supercharge skin brightness, fade age spots, and stimulate collagen for bouncy, glowing skin. 💗',
+    tagLine: product.description
+      ? product.description
+      : `Premium skincare formulated for ${product.category} concerns. Experience professional results at home.`,
     claims: [
       'Dermatologically Tested',
       'Suitable For All Skin Types',
@@ -348,28 +353,30 @@ AQUA, NIACINAMIDE, PROPYLENE GLYCOL, SALICYLIC ACID, HYALURONIC ACID, ALOE LEAF 
       'Cruelty Free'
     ],
     tabs: {
-      details: `Supercharge skin brightness, fade age spots, and stimulate collagen for bouncy, glowing skin. 💗 15% Vitamin C complex.`,
+      details: product.description
+        ? product.description
+        : `${product.name} is a premium skincare solution designed to address ${product.category} concerns. Formulated with active ingredients to deliver professional-grade results from the comfort of your home.`,
       benefits: [
-        { title: 'Supercharged Radiance', desc: 'Transforms dull and tired skin into a luminous glass-like glow.' },
-        { title: 'Collagen Booster', desc: 'Speeds up cellular repair, smoothing fine lines and wrinkles.' },
-        { title: 'Fades Sun Patches', desc: 'Reduces sun spots, age spots, and hyperpigmentation.' },
-        { title: 'Fights Skin Aging', desc: 'Heavy antioxidant shielding from solar damage and pollution.' }
+        { title: 'Targeted Treatment', desc: `Specifically formulated to address ${product.category} concerns effectively.` },
+        { title: 'Daily Safe Use', desc: 'Mild, balanced ingredients safe for everyday application.' },
+        { title: 'Visible Results', desc: 'Clinically proven ingredients that deliver noticeable improvements with regular use.' },
+        { title: 'Skin Health Boost', desc: 'Works in harmony with your skin\'s natural cycles to revitalize and restore health.' }
       ],
-      about: `Our Vitamin C Face Serum is a premium glowing serum containing 15% active Vitamin C. It acts as a powerful antioxidant skin defense system, restoring a youthful, luminous glass skin finish.
+      about: `${product.name} is an advanced skincare product developed to target ${product.category} concerns with precision. Using a blend of active botanical and clinical ingredients, this formula is crafted to deliver visible improvements from the very first application.
 
-By neutralizing free radicals and increasing collagen synthesis, it irons out fine lines and firms up lax contours.
+The lightweight, skin-friendly texture absorbs quickly without leaving residue. It is free from harsh chemicals, making it suitable for sensitive skin types.
 
-Licorice root and Ferulic Acid boost the brightening effect, making this serum a powerhouse to solve hyperpigmentation.`,
-      howToUse: `After cleansing, apply 3-4 drops onto your face.
+With consistent use, you will notice a significant improvement in your skin's texture, tone, and overall radiance.`,
+      howToUse: `After cleansing your face, apply a small amount of the product to the targeted area.
 
-Pat gently until absorbed. Follow up with moisturizer. For maximum efficacy, use in the morning followed by sunscreen.`,
+Massage gently in upward circular motions until fully absorbed. For optimal results, use twice daily — morning and evening. Always follow up with sunscreen during the day.`,
       ingredients: `KEY INGREDIENTS:
-- 15% Vitamin C (L-Ascorbic Acid): Highly potent brightening agent and collagen booster.
-- Ferulic Acid: Stabilizes Vitamin C and doubles its antioxidant power.
-- Licorice Root Extract: Fades hyperpigmentation and calms skin.
+- Active Skin Complex: Targets specific concerns related to ${product.category}.
+- Hyaluronic Acid & Glycerin: Locks in essential moisture for plump, hydrated skin.
+- Niacinamide: Multi-benefit ingredient that brightens, soothes, and reduces pores.
 
 COMPLETE INGREDIENTS:
-AQUA, L-ASCORBIC ACID, NIACINAMIDE, FERULIC ACID, GLYCERIN, HYALURONIC ACID, LICORICE ROOT EXTRACT, PANTHENOL, PHENOXYETHANOL.`
+AQUA, GLYCERIN, NIACINAMIDE, PROPYLENE GLYCOL, HYALURONIC ACID, ALOE BARBADENSIS LEAF EXTRACT, PANTHENOL, ALLANTOIN, XANTHAN GUM, PHENOXYETHANOL.`
     }
   }
 }
@@ -378,64 +385,41 @@ export default function ProductDetails({ productId, products, onBack }) {
   const [product, setProduct] = useState(null)
   const [qty, setQty] = useState(1)
   const [activeTab, setActiveTab] = useState('details')
-  const { addToCart, cart } = useCart()
+  const { addToCart } = useCart()
   const [successMsg, setSuccessMsg] = useState('')
 
   useEffect(() => {
     // Scroll to top on mount/product change
     window.scrollTo({ top: 0, behavior: 'instant' })
 
-    let found = products.find((p) => p.id === productId)
+    // Priority 1: Search in the live products prop (includes admin-added products)
+    let found = (products || []).find((p) => p.id === productId)
+
+    // Priority 2: Search in static bundled fallback (original 7 products)
     if (!found) {
-      found = STATIC_FALLBACK_PRODUCTS.find((p) => p.id === productId)
+      found = STATIC_PRODUCTS.find((p) => p.id === productId)
     }
 
     if (found) {
       setProduct(found)
+      setQty(1)
+      setActiveTab('details')
     } else {
-      // Direct fallback to home if invalid ID
+      // Invalid product ID → go back home
       onBack()
     }
   }, [productId, products, onBack])
 
   if (!product) return null
 
-  // Fetch product detailed details or generate high-quality fallback details
-  const details = PRODUCT_DETAILS_MAP[product.id] || {
-    reviewsCount: 15,
-    rating: 5,
-    tagLine: `Premium skincare specifically formulated to address concerns. Category: ${product.category}.`,
-    claims: [
-      'Dermatologically Tested',
-      'Suitable For All Skin Types',
-      'Paraben & Sulphate Free',
-      'Made With Natural Ingredients',
-      'Clinically Proven Ingredients',
-      'Cruelty Free'
-    ],
-    tabs: {
-      details: `Formulated to support healthy skin. Provides key nutrients to targeted areas. Category: ${product.category}. Price: ${product.price}.`,
-      benefits: [
-        { title: 'High Performance Care', desc: `Specifically targeted for concerns related to ${product.category}.` },
-        { title: 'Daily Comfort', desc: 'Mild ingredients safe for daily applications.' },
-        { title: 'Skin Health Boost', desc: 'Works with the natural skin cycles to revitalize health.' }
-      ],
-      about: `Our high-performance ${product.name} is a state-of-the-art solution designed to target concerns within the ${product.category} category. Containing active elements, it cleanses, hydrates, and locks in nutrition to provide professional grade results at home.`,
-      howToUse: `After washing, apply a small quantity to target areas of the face and neck. Massage in upward motions until fully absorbed. Use twice daily.`,
-      ingredients: `KEY INGREDIENTS:
-- Active Skin Complex: Targets specific concerns of ${product.category}.
-- Hyaluronic Acid & Glycerin: Locks in essential moisture.
-
-COMPLETE INGREDIENTS:
-AQUA, GLYCERIN, NIACINAMIDE, PROPYLENE GLYCOL, ALOE BARBADENSIS EXTRACT, ALLANTOIN, PHENOXYETHANOL.`
-    }
-  }
+  // Fetch detailed content: prefer the pre-written map, fallback to generated details
+  const details = PRODUCT_DETAILS_MAP[product.id] || generateFallbackDetails(product)
 
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) {
       addToCart(product)
     }
-    setSuccessMsg(`✓ Added ${qty} x ${product.name} to cart!`)
+    setSuccessMsg(`✓ Added ${qty} × ${product.name} to cart!`)
     window.setTimeout(() => setSuccessMsg(''), 3000)
   }
 
@@ -443,23 +427,17 @@ AQUA, GLYCERIN, NIACINAMIDE, PROPYLENE GLYCOL, ALOE BARBADENSIS EXTRACT, ALLANTO
     for (let i = 0; i < qty; i++) {
       addToCart(product)
     }
-    // Set hash to cart or open cart drawer via clicking cart icon or triggering it
-    // The drawer opens when App cartOpen is true. In App, we can trigger click on the header's cart icon:
     const cartBtn = document.querySelector('.cart-icon')
-    if (cartBtn) {
-      cartBtn.click()
-    }
+    if (cartBtn) cartBtn.click()
   }
 
-  const renderStars = () => {
-    return (
-      <div className="pd-stars">
-        {[...Array(5)].map((_, i) => (
-          <span key={i} className="pd-star">★</span>
-        ))}
-      </div>
-    )
-  }
+  const renderStars = () => (
+    <div className="pd-stars">
+      {[...Array(5)].map((_, i) => (
+        <span key={i} className="pd-star">★</span>
+      ))}
+    </div>
+  )
 
   const getProductTypeWord = () => {
     const name = product.name.toLowerCase()
@@ -620,7 +598,17 @@ AQUA, GLYCERIN, NIACINAMIDE, PROPYLENE GLYCOL, ALOE BARBADENSIS EXTRACT, ALLANTO
                   <div className="pd-tab-text pre-wrap-style">
                     {details.tabs.ingredients.split('\n\n').map((block, idx) => {
                       if (block.startsWith('KEY INGREDIENTS:') || block.startsWith('COMPLETE INGREDIENTS:')) {
-                        return <h3 key={idx} className="pd-ingredients-header">{block.split('\n')[0]}</h3>
+                        const lines = block.split('\n')
+                        return (
+                          <div key={idx}>
+                            <h3 className="pd-ingredients-header">{lines[0]}</h3>
+                            {lines.slice(1).map((line, li) => (
+                              <p key={li} style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--ink-soft)', margin: '4px 0' }}>
+                                {line}
+                              </p>
+                            ))}
+                          </div>
+                        )
                       }
                       return (
                         <p key={idx} style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--ink-soft)' }}>
