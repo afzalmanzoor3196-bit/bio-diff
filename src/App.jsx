@@ -16,7 +16,7 @@ import WhatsAppButton from './components/jsx/WhatsAppButton.jsx'
 import CartDrawer from './components/jsx/CartDrawer.jsx'
 import AdminLogin from './components/jsx/AdminLogin.jsx'
 import AdminDashboard from './components/jsx/AdminDashboard.jsx'
-import initialProducts from './data/products.js'
+import initialProducts, { PRODUCT_IMAGE_MAP } from './data/products.js'
 import ProductDetails from './components/jsx/ProductDetails.jsx'
 
 const normalizeStory = (story, fallbackId = `story-${Date.now()}`) => {
@@ -52,7 +52,15 @@ function AppInner() {
     const saved = window.localStorage.getItem('biodiff_products')
     if (!saved) return initialProducts
     try {
-      return JSON.parse(saved)
+      const parsed = JSON.parse(saved)
+      // Re-hydrate images for default products: Vite changes hashed asset filenames
+      // on every build/deploy, so stored paths (e.g. /assets/Product 1-Cvdb2kt2.jpeg)
+      // become 404. We always use the current imported asset for known product IDs.
+      return parsed.map((p) => {
+        const freshImage = PRODUCT_IMAGE_MAP[p.id]
+        if (freshImage) return { ...p, image: freshImage }
+        return p // admin-added products keep their base64 image
+      })
     } catch {
       return initialProducts
     }

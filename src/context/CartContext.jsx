@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { PRODUCT_IMAGE_MAP } from '../data/products.js'
 
 const CartContext = createContext(null)
 const STORAGE_KEY = 'biodiff_cart'
@@ -16,7 +17,15 @@ export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
-      return saved ? JSON.parse(saved) : []
+      if (!saved) return []
+      const parsed = JSON.parse(saved)
+      // Re-hydrate images: Vite asset hashes change on every deploy,
+      // so we replace stored image paths with current imported assets for known products.
+      return parsed.map((item) => {
+        const freshImage = PRODUCT_IMAGE_MAP[item.id]
+        if (freshImage) return { ...item, image: freshImage }
+        return item // admin-added products keep their base64 image
+      })
     } catch {
       return []
     }

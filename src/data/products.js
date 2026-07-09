@@ -6,6 +6,19 @@ import product5 from '../assets/Product 5.jpeg'
 import product6 from '../assets/Product 6.jpeg'
 import product7 from '../assets/Product 7.jpeg'
 
+// Map from product ID → always-fresh imported image asset
+// This is used to fix images after loading from localStorage,
+// because Vite changes hashed filenames on each build/deploy.
+export const PRODUCT_IMAGE_MAP = {
+  'biodiff-glutathione-vitamin-c-intensive-skin-brightening-cream': product1,
+  'biodiff-glutathione-vit-c-intensive-skin-brightening-cream-(3in1)': product2,
+  'biodiff-glutathion-brightening-facewash': product3,
+  'mandelic-acid-pro-(exfoliating-cream-&-spotless-treatment-set)': product4,
+  'biodiff-mandelac-retinol-10%-facewash-(exfoliates-&-smoothes)': product5,
+  'spectra-block-spf60-sunblock': product6,
+  'spectra-block-mega-block-3in1-spf100': product7,
+}
+
 const initialProducts = [
   {
     id: 'biodiff-glutathione-vitamin-c-intensive-skin-brightening-cream',
