@@ -18,7 +18,7 @@ const collectionLinks = [
 const socialLinks = [
   {
     label: 'Facebook',
-    href: 'https://www.facebook.com',
+    href: 'https://www.facebook.com/share/1Fz3KSsTSq/',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
         <path d="M13.5 22V13.5h3.5l.5-3.5h-4V7.5c0-1 .25-1.5 1.5-1.5h2V2.5h-2.5C11.5 2.5 10 4 10 6.75V10H7.5v3.5H10V22h3.5z" fill="currentColor" />
@@ -27,7 +27,7 @@ const socialLinks = [
   },
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com',
+    href: 'https://www.instagram.com/biodiff786?igsh=OGVydzNlY214ODFnor',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
         <rect x="3" y="3" width="18" height="18" rx="6" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -38,7 +38,7 @@ const socialLinks = [
   },
   {
     label: 'TikTok',
-    href: 'https://www.tiktok.com',
+    href: 'https://www.tiktok.com/@bio.diff786?_r=1&_t=ZS-97tVFiqeKvs',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
         <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.5a8.16 8.16 0 004.78 1.52V7.57a4.85 4.85 0 01-1.01-.88z" fill="currentColor" />
@@ -226,9 +226,9 @@ function Footer() {
         <div className="footer-col">
           <h5>SOCIALS</h5>
           <ul>
-            <li><a href="https://www.instagram.com" target="_blank" rel="noreferrer">Instagram</a></li>
-            <li><a href="https://www.tiktok.com" target="_blank" rel="noreferrer">TikTok</a></li>
-            <li><a href="https://www.facebook.com" target="_blank" rel="noreferrer">Facebook</a></li>
+            <li><a href="https://www.instagram.com/biodiff786?igsh=OGVydzNlY214ODFnor" target="_blank" rel="noreferrer">Instagram</a></li>
+            <li><a href="https://www.tiktok.com/@bio.diff786?_r=1&_t=ZS-97tVFiqeKvs" target="_blank" rel="noreferrer">TikTok</a></li>
+            <li><a href="https://www.facebook.com/share/1Fz3KSsTSq/" target="_blank" rel="noreferrer">Facebook</a></li>
           </ul>
         </div>
 

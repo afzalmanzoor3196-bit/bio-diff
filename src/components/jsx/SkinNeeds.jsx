@@ -182,8 +182,8 @@ function SkinNeeds({ products = defaultProducts }) {
                   }}
                   style={{ cursor: 'pointer' }}
                 >
+                  {p.badge && <span className="sn-badge-top">{p.badge}</span>}
                   <div className="sn-card-media">
-                    {p.badge && <span className="sn-badge">{p.badge}</span>}
                     <img src={p.image} alt={p.name} />
                     <button
                       type="button"
